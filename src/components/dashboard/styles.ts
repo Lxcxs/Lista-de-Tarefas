@@ -65,13 +65,13 @@ export const ContainerUsers = styled.div<Props>`
     transition: all 1s ease-in-out;
 
     &::-webkit-scrollbar {
-        width: 15px;
+        width: 10px;
     }
     &::-webkit-scrollbar-track {
         background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #969696;
+        background-color: #1b1b1b;
         border-radius: 2em;
         border: 3px solid #323232;
     }
@@ -90,37 +90,7 @@ export const ContainerUsers = styled.div<Props>`
     }
 
     div.user {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: .5em;
-        background-color: #505050;
-        transform: all 1s ease;
-        animation: openSmooth .7s ease-in-out;
-        border-radius: .3em;
-
-        div.removeButton, div.checkButton {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            border-radius: 50%;
-        }
-        div.checkButton {
-            flex: 1;
-            margin-right: .5em;
-            gap: .5em;
-        }
-
-        @keyframes openSmooth {
-            0% {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0px);
-                opacity: 1;
-            }
-        }
+        
     }
 
 
@@ -129,11 +99,45 @@ export const ContainerUsers = styled.div<Props>`
     }
     
 `
+export const TaskContainer = styled.div<Props>`
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    padding: .5em;
+    background: ${(props) => (props.stts ? '#495f51' : '#505050')};
+    transform: all 1s ease;
+    animation: openSmooth .7s ease-in-out;
+    border-radius: .3em;
+    transition: all .3s ease;
+
+    div.removeButton, div.checkButton {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+    }
+    div.checkButton {
+        flex: 1;
+        margin-right: .5em;
+        gap: .5em;
+    }
+
+    @keyframes openSmooth {
+        0% {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }
+`
 
 
 
 export const Item = styled.p<Props>`
-    width: 100%;
+    max-width: 100%;
     color: ${(props) => (props.stts ? '#38ff59' : '#fff')};
     text-decoration: ${(props) => (props.stts ? 'line-through' : 'none')};
     font-style: ${(props) => (props.stts ? 'italic' : 'none')};
@@ -144,8 +148,8 @@ export const TaskStatus = styled.div`
     align-items: center;
     justify-content: space-between;
     background: #212121;
-    padding: 1em;
-    border-radius: .3em;
+    text-transform: uppercase;
+    padding: .5em 1em;
 `
 export const Form = styled.form`
     width: 100%;

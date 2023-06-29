@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Button, Container, ContainerUsers, Content, Form, Header, Item, Table, TaskStatus, TaskContainer } from "./styles";
+=======
+import { Button, Container, ContainerUsers, Content, Form, Header, Item, Table, TaskStatus } from "./styles";
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
 import React from 'react'
 import axios from 'axios'
 import { IoClose } from 'react-icons/io5';
@@ -9,14 +13,24 @@ interface ITask {
     task: string;
     done: boolean;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
 
 export default function Dashboard() {
 
     const [taskList, setTaskList] = React.useState<ITask[]>([])
     const [task, setTask] = React.useState("")
     const form = document.getElementById('user_form')
+<<<<<<< HEAD
     const [doneList, setDoneList] = React.useState<any[]>([])
     const localHost = 'http://localhost:7070'
+=======
+    const [checkedList, setCheckedList] = React.useState<ITask[]>([])
+    
+    
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
     
     React.useEffect(() => {
       const fetchUsers = async () => {
@@ -24,7 +38,12 @@ export default function Dashboard() {
         const responseJSON = await response.json()
         const arrTask = taskList.map(item => item).filter(data => data.done === true)
         setTaskList(responseJSON)
+<<<<<<< HEAD
         setDoneList(arrTask)
+=======
+        setCheckedList(arrTask)
+       
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
       }
       fetchUsers()
     }, [taskList])
@@ -42,12 +61,18 @@ export default function Dashboard() {
                 task: task,
                 done: false
             })
-
+            
         } catch (error) {
             console.error('Ocorreu um erro:', error)
         }
+<<<<<<< HEAD
         setTask("")
         console.log(taskList)
+=======
+        setTask("");
+        console.log(taskList);
+        console.log(checkedList)
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
         
     }
 
@@ -92,7 +117,13 @@ export default function Dashboard() {
                     </Header>
                     <Form>
                         <div className="col01">
+<<<<<<< HEAD
                             <input onChange={e => setTask(e.target.value)} className="input" type="text" placeholder="Insira uma tarefa..." />
+=======
+                            <input onChange={e => setTask(e.target.value)}
+                            value={task}
+                            className="input" type="text" placeholder="Insira uma tarefa..." />
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
                         </div>
 
                         <Button type="submit" onClick={addTask}>
@@ -112,7 +143,11 @@ export default function Dashboard() {
 
                         {
                             taskList.map((item) => (
+<<<<<<< HEAD
                                 <TaskContainer key={item._id} stts={item.done}>
+=======
+                                <div className="user" key={item._id}>
+>>>>>>> 643ace191a20bec9f6a3c57a68ac7017bd02191a
                                     <div className="checkButton" onClick={() => checkTask(item._id, item.done)}>
                                         {item.done ? <MdCheckBox size={25} color="#38ff59" /> : <MdCheckBoxOutlineBlank size={25} />}
                                     

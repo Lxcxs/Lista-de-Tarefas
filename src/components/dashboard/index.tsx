@@ -1,20 +1,25 @@
-import { InspectOptions } from "util";
 import { Button, Container, ContainerUsers, Content, Form, Header, Item, Table, TaskStatus } from "./styles";
-import React, { useRef } from 'react'
+import React from 'react'
 import axios from 'axios'
 import { IoClose } from 'react-icons/io5';
 import { MdCheckBoxOutlineBlank, MdCheckBox, MdOutlineAdd } from 'react-icons/md'
 
+interface ITask {
+    _id: string;
+    task: string;
+    done: boolean;
+}
+
 
 export default function Dashboard() {
 
-    const [taskList, setTaskList] = React.useState<any[]>([])
+    const [taskList, setTaskList] = React.useState<ITask[]>([])
     const [task, setTask] = React.useState("")
     const [checked, setChecked] = React.useState(0)
     const form = document.getElementById('user_form')
-    const [checkedList, setCheckedList] = React.useState<any[]>([])
+    const [checkedList, setCheckedList] = React.useState<ITask[]>([])
     
-    const taskRef = useRef<any>(null);
+    
     
     React.useEffect(() => {
       const fetchUsers = async () => {
@@ -23,6 +28,7 @@ export default function Dashboard() {
         const arrTask = taskList.map(item => item).filter(data => data.done === true)
         setTaskList(responseJSON)
         setCheckedList(arrTask)
+       
       }
       fetchUsers()
     }, [taskList])
@@ -34,17 +40,19 @@ export default function Dashboard() {
     form?.addEventListener('submit', preventForm)
 
     async function addTask() {
-        setTask(taskRef.current.value)
 
         try {
             await axios.post('http://localhost:7070/tasks', {
                 task: task,
                 done: false
             })
-
+            
         } catch (error) {
             console.error('Ocorreu um erro:', error)
         }
+        setTask("");
+        console.log(taskList);
+        console.log(checkedList)
         
     }
 
@@ -92,7 +100,9 @@ export default function Dashboard() {
                     </Header>
                     <Form id="user_form">
                         <div className="col01">
-                            <input ref={taskRef} className="input" type="text" placeholder="Insira uma tarefa..." />
+                            <input onChange={e => setTask(e.target.value)}
+                            value={task}
+                            className="input" type="text" placeholder="Insira uma tarefa..." />
                         </div>
 
                         <Button type="submit" onClick={addTask}>
@@ -112,7 +122,7 @@ export default function Dashboard() {
 
                         {
                             taskList.map((item) => (
-                                <div className="user">
+                                <div className="user" key={item._id}>
                                     <div className="checkButton" onClick={() => checkTask(item._id, item.done)}>
                                         {item.done ? <MdCheckBox size={25} color="#38ff59" /> : <MdCheckBoxOutlineBlank size={25} />}
                                     

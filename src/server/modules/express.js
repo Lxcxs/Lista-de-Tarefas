@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const UserModel = require('../models/user.model')
+const TaskModel = require('../models/task.model')
 
 const app = express()
 
@@ -9,7 +9,7 @@ app.use(express.json())
 
 app.get('/tasks', async (req, res) => {
     try {
-        const tasks = await UserModel.find({})
+        const tasks = await TaskModel.find({})
 
         res.status(200).json(tasks)
     } catch (error) {
@@ -19,7 +19,7 @@ app.get('/tasks', async (req, res) => {
 
 app.post('/tasks', async (req, res) => {
     try {
-        const tasks = await UserModel.create(req.body)
+        const tasks = await TaskModel.create(req.body)
 
         res.status(200).json(tasks)
     }catch (error) {
@@ -31,7 +31,7 @@ app.post('/tasks', async (req, res) => {
 app.delete('/tasks/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const tasks = await UserModel.findByIdAndRemove(id)
+        const tasks = await TaskModel.findByIdAndRemove(id)
 
         res.status(200).json(tasks)
     } catch (error) {
@@ -42,7 +42,7 @@ app.delete('/tasks/:id', async (req, res) => {
 app.patch('/tasks/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const tasks = await UserModel.findByIdAndUpdate(id, req.body, {new: true})
+        const tasks = await TaskModel.findByIdAndUpdate(id, req.body, {new: true})
 
         res.status(200).json(tasks)
     } catch (error) {

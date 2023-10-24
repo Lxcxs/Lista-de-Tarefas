@@ -17,19 +17,19 @@ export default function Dashboard() {
     const form = document.getElementById('user_form')
     const [doneList, setDoneList] = React.useState<any[]>([])
     const localHost = 'http://localhost:7070'
-    
+
     React.useEffect(() => {
-      const fetchUsers = async () => {
-        const response = await fetch(`${localHost}/tasks`)
-        const responseJSON = await response.json()
-        const arrTask = taskList.map(item => item).filter(data => data.done === true)
-        setTaskList(responseJSON)
-        setDoneList(arrTask)
-      }
-      fetchUsers()
+        const fetchUsers = async () => {
+            const response = await fetch(`${localHost}/tasks`)
+            const responseJSON = await response.json()
+            const arrTask = taskList.map(item => item).filter(data => data.done === true)
+            setTaskList(responseJSON)
+            setDoneList(arrTask)
+        }
+        fetchUsers()
     }, [taskList])
 
-    
+
     function preventForm(e: any) {
         e.preventDefault()
     }
@@ -38,17 +38,20 @@ export default function Dashboard() {
     async function addTask() {
 
         try {
-            await axios.post(`${localHost}/tasks`, {
-                task: task,
-                done: false
-            })
+            if (task !== "") {
+                await axios.post(`${localHost}/tasks`, {
+                    task: task,
+                    done: false
+                })
+                setTask("")
+                console.log(taskList)
+            }
 
         } catch (error) {
             console.error('Ocorreu um erro:', error)
         }
-        setTask("")
-        console.log(taskList)
-        
+
+
     }
 
     async function removeTask(id: string) {
@@ -82,7 +85,7 @@ export default function Dashboard() {
         }
     }
 
-    return(
+    return (
         <Container>
             <Content>
 
@@ -100,11 +103,11 @@ export default function Dashboard() {
                         </Button>
                     </Form>
 
-                    <TaskStatus>
-                            <p>Concluídas: {doneList.length}</p>
-                        
-                            <p>Tarefas: {taskList.length}</p>
-                    </TaskStatus>
+                    {/* <TaskStatus>
+                        <p>Concluídas: {doneList.length}</p>
+
+                        <p>Tarefas: {taskList.length}</p>
+                    </TaskStatus> */}
 
                     <ContainerUsers stts={false}>
 
@@ -114,10 +117,10 @@ export default function Dashboard() {
                             taskList.map((item) => (
                                 <TaskContainer key={item._id} stts={item.done}>
                                     <div className="checkButton" onClick={() => checkTask(item._id, item.done)}>
-                                        {item.done ? <MdCheckBox size={25} color="#38ff59" /> : <MdCheckBoxOutlineBlank size={25} />}
-                                    
+                                        {item.done ? <MdCheckBox size={25} color="#fff" /> : <MdCheckBoxOutlineBlank size={25} />}
 
-                                    
+
+
                                         <Item stts={item.done}> {item.task} </Item>
                                     </div>
 
